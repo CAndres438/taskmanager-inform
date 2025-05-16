@@ -1,5 +1,6 @@
 package com.caop.taskmanager_inform.services;
 
+import com.caop.taskmanager_inform.controllers.NotificationController;
 import com.caop.taskmanager_inform.dto.TaskRequest;
 import com.caop.taskmanager_inform.dto.TaskResponse;
 import com.caop.taskmanager_inform.models.Task;
@@ -21,12 +22,16 @@ import java.util.stream.Collectors;
 public class TaskService implements ITaskService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
+    private final NotificationController notificationController;
+    private final SimpMessagingTemplate messagingTemplate;
 
 
 
-    public TaskService(TaskRepository taskRepository, UserRepository userRepository, SimpMessagingTemplate messagingTemplate) {
+    public TaskService(TaskRepository taskRepository, UserRepository userRepository, NotificationController notificationController, SimpMessagingTemplate messagingTemplate) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
+        this.notificationController = notificationController;
+        this.messagingTemplate = messagingTemplate;
     }
 
     @Override
@@ -43,7 +48,13 @@ public class TaskService implements ITaskService {
 
         Task saved = taskRepository.save(task);
 
+        notificationController.sendTaskAssignedNotification(
+                saved.getAssignedTo().getId(),
+                "You have a nw task: " + saved.getTitle()
+        );
+
         TaskResponse response = mapToResponse(saved);
+        messagingTemplate.convertAndSend("/topic/tasks", response);
         return response;
     }
 
