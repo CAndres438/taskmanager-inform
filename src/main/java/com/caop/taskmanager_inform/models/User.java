@@ -2,7 +2,7 @@ package com.caop.taskmanager_inform.models;
 
 import jakarta.persistence.*;
 
-import javax.management.relation.Role;
+
 import java.util.Set;
 
 @Entity
