@@ -1,7 +1,9 @@
 package com.caop.taskmanager_inform.controllers;
 
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class NotificationController {
     private final SimpMessagingTemplate messagingTemplate;
 
