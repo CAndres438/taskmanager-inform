@@ -1,0 +1,1 @@
+web: java -jar target/taskmanager-inform-0.0.1-SNAPSHOT.jar
