@@ -10,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -18,6 +20,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final UserRepository userRepo;
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     public JwtAuthFilter(JwtUtil jwtUtil, UserRepository userRepo) {
         this.jwtUtil = jwtUtil;
@@ -47,7 +50,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 var authToken = new UsernamePasswordAuthenticationToken(
                         user, null, user.getRoles()
                 );
-                user.getRoles().forEach(r -> System.out.println("ROL: " + r.getName()));
 
 
                 authToken.setDetails(
@@ -62,7 +64,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
 
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            System.out.println("❌ Autenticación no establecida, posible problema con el token o roles.");
+            logger.warn("Auth: ❌ not Authentication");
         }
     }
 }
