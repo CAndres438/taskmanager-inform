@@ -1,11 +1,21 @@
 package com.caop.taskmanager_inform.dto;
 
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+
 public class AuthRequest {
+    @NotBlank(message = "auh.name_not_blank")
     private String name;
 
+    @NotBlank(message = "auth.email_not_blank")
+    @Email(message= "auth.email_invalid")
     private String email;
 
+    @NotBlank(message = "auth.password_not_blank")
+    @Size(min = 6, message = "auth.password_size")
     private String password;
 
 
