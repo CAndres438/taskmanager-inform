@@ -18,6 +18,8 @@ public class AuthRequest {
     @Size(min = 6, message = "auth.password_size")
     private String password;
 
+    public AuthRequest(){}
+
 
     public AuthRequest(String email, String password, String name) {
 
