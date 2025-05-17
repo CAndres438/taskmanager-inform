@@ -1,4 +1,4 @@
-# taskmanager-inform
+# ✅ TaskManagerInform
 # 🧠 Task Manager App - Backend (Spring Boot)
 
 Bienvenido a la aplicación de gestión de tareas construida con **Spring Boot**, **JWT**, **WebSocket/STOMP** y **PostgreSQL**. Este backend cubre autenticación, control de acceso por roles, notificaciones en tiempo real, búsqueda avanzada y más.
